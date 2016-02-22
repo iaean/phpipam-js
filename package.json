@@ -28,10 +28,10 @@
   "scripts": {},
   "dependencies": {
     "underscore": "~1.8.3",
-    "deep-extend: "~0.4.1",
-    "bluebird: "~3.3.1",
-    "request: "~2.69.0",
-    "synchronize: "~0.9.15"
+    "deep-extend": "~0.4.1",
+    "bluebird": "~3.3.1",
+    "request": "~2.69.0",
+    "synchronize": "~0.9.15"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
