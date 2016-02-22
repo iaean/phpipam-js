@@ -1,0 +1,5 @@
+
+{ "baseURI": "https://ip.example.com/ipv/api/import",
+  "username": "ipam.api",
+  "password": "secret" }
+

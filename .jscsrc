@@ -1,0 +1,11 @@
+{
+  "preset": "google",
+  "disallowSpacesInsideObjectBrackets": false,
+  "requireCurlyBraces": [
+    "for",
+    "while",
+    "do",
+    "try",
+    "catch"
+  ]
+}
