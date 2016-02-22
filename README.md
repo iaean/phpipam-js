@@ -11,9 +11,9 @@ Install the module (globally) via: `npm install [-g] phpipam-js`
 
 ### The sync Interface
 
-#### Note for RHEL/CentOS 6
+#### Note on RHEL/CentOS 6
 
-By installing devtools-1.1 you can encounter problems while compiling and installing Node fibers(1) on those systems.
+By installing devtools-1.1 you can encounter problems while compiling and installing [Node fibers(1)](https://github.com/laverdet/node-fibers) on those systems...
 
 ```bash
 [~] >>wget http://people.centos.org/tru/devtools-1.1/devtools-1.1.repo
