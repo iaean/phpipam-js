@@ -3,6 +3,8 @@
 module.exports = function(grunt) {
 
   grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
+
     nodeunit: {
       files: ['test/**/*_test.js']
     },
@@ -96,11 +98,34 @@ module.exports = function(grunt) {
       test: {
         src: ['test/**/*.js']
       }
+    },
+    browserify: {
+      dist: {
+        src: ['lib/<%= pkg.name %>.js'],
+        dest: 'phpipam.js',
+        options: {
+          browserifyOptions: {
+            standalone: 'IPapi'
+          }
+        }
+      }
+    },
+    uglify: {
+      dist: {
+        options: {
+          mangle: true,
+          compress: true
+        },
+        files: {
+          'phpipam.min.js': ['phpipam.js']
+        }
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-jscs');
   grunt.loadNpmTasks('grunt-jsbeautifier');
+  grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -109,5 +134,6 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['jscs', 'jshint', 'nodeunit']);
   grunt.registerTask('test', ['nodeunit']);
   grunt.registerTask('lint', ['jscs', 'jshint']);
+  grunt.registerTask('build', ['default', 'browserify', 'uglify']);
 
 };

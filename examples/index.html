@@ -1,0 +1,17 @@
+<html>
+  <head></head>
+  <body>
+    <div id="forms"></div>
+    <script src="/phpipam.min.js"></script>
+    <script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script>
+      $.getJSON("/examples/phpipam.json", function(config) {
+        console.log(config);
+        var api = new IPapi(config);
+        api.login(); 
+        api.fetchNet('10.64.64.0/25').then(function(r) { console.log(r); });
+        api.logout();
+      });
+    </script>
+  </body>
+</html>

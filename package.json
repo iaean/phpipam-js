@@ -21,6 +21,9 @@
       "url": "https://github.com/iaean/phpipam-js/blob/master/LICENSE"
     }
   ],
+  "browser": {
+    "./lib/sync.js": "./lib/browser/sync.js"
+  },
   "main": "lib/phpipam-js",
   "engines": {
     "node": ">= 4.2.0"
@@ -31,6 +34,7 @@
     "deep-extend": "~0.4.1",
     "bluebird": "~3.3.1",
     "request": "~2.69.0",
+    "xhr": "~2.2.0",
     "synchronize": "~0.9.15"
   },
   "devDependencies": {
@@ -40,6 +44,7 @@
     "grunt-contrib-uglify": "~0.11.1",
     "grunt-contrib-jshint": "~0.6.4",
     "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-browserify": "latest",
     "grunt-contrib-watch": "~0.5.3"
   },
   "keywords": [
@@ -53,4 +58,3 @@
     "Address"
   ]
 }
-
