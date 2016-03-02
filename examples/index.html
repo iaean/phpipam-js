@@ -1,17 +1,113 @@
 <html>
-  <head></head>
+  <head>
+    <link rel="stylesheet"
+      href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+      integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+      crossorigin="anonymous"/>
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/css/selectize.min.css"/>
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/css/selectize.bootstrap3.min.css"/>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.min.js"></script>
+    <script src="/phpipam.js"></script>
+  </head>
   <body>
-    <div id="forms"></div>
-    <script src="/phpipam.min.js"></script>
-    <script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
+    <div class="container" style="width:480px">
+      <div class="panel panel-default well">
+        <div class="panel-heading">
+          <h3 class="panel-title"><a href="#" class="panel-title">{php}IPAM.JS</a>
+          browser example</h3><br/>
+          using <a href="#">Bootstrap</a>, <a href="#">jQuery</a>,
+          <a href="#">Selectize.js</a> and <a href="#">Underscore.js</a>
+          <p></p>
+        </div>
+        <div class="panel-body">
+          <select type="text" class="form-control" id="net" placeholder="10.1.2.0/24"/>
+          <input  type="text" class="form-control" id="parent" placeholder="Parent Network"/>
+          <input  type="text" class="form-control" id="vlan" placeholder="VLAN"/>
+        </div>
+        <div class="panel-footer">
+          <button type="button" class="btn btn-primary" autocomplete="off" id="fetch"></button>
+          <button type="button" class="btn btn-link" autocomplete="off" id="link"></button>
+        </div>
+      </div>
+    </div>
+
     <script>
-      $.getJSON("/examples/phpipam.json", function(config) {
-        console.log(config);
-        var api = new IPapi(config);
-        api.login(); 
-        api.fetchNet('10.64.64.0/25').then(function(r) { console.log(r); });
-        api.logout();
+      $('#link').prop('disabled', true).text('IPV...');
+      $('#fetch').prop('disabled', true).text('Loading...');
+      $('#vlan').prop('disabled', true).val('');
+      $('#parent').prop('disabled', true).val('');
+      $('#net').val('');
+
+      function apiCall(cb) {
+        $.getJSON("/examples/phpipam.json", function(config) {
+          var api = new IPapi(config);
+          api.login(); 
+          cb(api);
+          api.logout();
+        });
+      }
+
+      var selectize = $('#net').selectize({
+        preload: true,
+        load: function(q, cb) {
+          if (q) return cb();
+          apiCall(function(api) {
+            api.fetchNets()
+              .then(function(r) {
+                cb(_.map(r, function(v, k) {
+                  return {
+                    text: k + ' (' + _.chain(v).pluck('description').compact().value().join(', ') + ')',
+                    network: k
+                  };
+                }));
+              })
+              .catch(function(e) { cb([]); });
+          });
+        },
+        persist: false,
+        create: true,
+        closeAfterSelect: true,
+        maxItems: 1,
+        valueField: 'network',
+        labelField: 'text',
+        sortField: 'network',
+        searchField: ['network'],
+      })[0].selectize;
+
+      selectize.on('change', function() {
+        $('#fetch').prop('disabled', false);
+        $('#link').prop('disabled', true);
       });
+      selectize.on('load', function() {
+        $('#fetch').text('Fetch');
+      });
+
+      $('#link').on('click', function() {
+        window.open($('#link').text(), '_blank');
+      });
+      $('#fetch').on('click', function() {
+          apiCall(function(api) {
+            api.fetchNet($('#net').val())
+              .then(function(r) {
+                if (r.vlan && r.vlan.number && r.vlan.number > 0)
+                  $('#vlan').val(r.vlan.number);
+                if (r.masterSubnet && r.masterSubnet.subnet && r.masterSubnet.mask)
+                  $('#parent').val(r.masterSubnet.subnet+'/'+r.masterSubnet.mask);
+                if (r.masterSubnet && r.masterSubnet.description)
+                  $('#parent').val($('#parent').val()+' ('+r.masterSubnet.description+')');
+                $('#link').text(api.options.appBase+'/subnets/'+r.sectionId+'/'+r.id+'/');
+                $('#link').prop('disabled', false);
+                $('#fetch').prop('disabled', true);
+              })
+              .catch (function() { });
+          });
+      });
+
     </script>
   </body>
 </html>
