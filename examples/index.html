@@ -8,21 +8,23 @@
       href="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/css/selectize.min.css"/>
     <link rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/css/selectize.bootstrap3.min.css"/>
-
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.min.js"></script>
-    <script src="/phpipam.js"></script>
   </head>
   <body>
     <div class="container" style="width:480px">
       <div class="panel panel-default well">
         <div class="panel-heading">
-          <h3 class="panel-title"><a href="#" class="panel-title">{php}IPAM.JS</a>
+          <h3 class="panel-title"><a href="#"
+          class="panel-title"><strong>{php}IPAM.JS</strong></a>
           browser example</h3><br/>
           using <a href="#">Bootstrap</a>, <a href="#">jQuery</a>,
-          <a href="#">Selectize.js</a> and <a href="#">Underscore.js</a>
-          <p></p>
+          <a href="#">Selectize.js</a> and <a
+          href="#">Underscore.js</a><hr/>
+          <p class="text-justify">The example populates a Selectize.js powered ComboBox
+          onLoad via <code>api.fetchNets()</code>. Now you can select one of received
+          networks or input a new one. The Fetch button queries again for that network
+          via <code>api.fetchNet(cidr)</code>, fills some widget elements and signals
+          the resulting state...
+          </p>
         </div>
         <div class="panel-body">
           <select type="text" class="form-control" id="net" placeholder="10.1.2.0/24"/>
@@ -36,6 +38,10 @@
       </div>
     </div>
 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.min.js"></script>
+    <script src="/phpipam.js"></script>
     <script>
       $('#link').prop('disabled', true).text('IPV...');
       $('#fetch').prop('disabled', true).text('Loading...');
@@ -69,7 +75,7 @@
               .catch(function(e) { cb([]); });
           });
         },
-        persist: false,
+        persist: true,
         create: true,
         closeAfterSelect: true,
         maxItems: 1,
@@ -80,8 +86,12 @@
       })[0].selectize;
 
       selectize.on('change', function() {
-        $('#fetch').prop('disabled', false);
-        $('#link').prop('disabled', true);
+        $('#vlan').val('');
+        $('#parent').val('');
+        $('#link').prop('disabled', true).text('IPV...');
+        $('#fetch').prop('disabled', false)
+          .removeClass('btn-primary').removeClass('btn-danger')
+          .removeClass('btn-success').addClass('btn-primary');
       });
       selectize.on('load', function() {
         $('#fetch').text('Fetch');
@@ -102,9 +112,15 @@
                   $('#parent').val($('#parent').val()+' ('+r.masterSubnet.description+')');
                 $('#link').text(api.options.appBase+'/subnets/'+r.sectionId+'/'+r.id+'/');
                 $('#link').prop('disabled', false);
-                $('#fetch').prop('disabled', true);
+                $('#fetch').prop('disabled', true)
+                  .removeClass('btn-primary').removeClass('btn-danger')
+                  .removeClass('btn-success').addClass('btn-success');
               })
-              .catch (function() { });
+              .catch (function() {
+                $('#fetch').prop('disabled', true)
+                  .removeClass('btn-primary').removeClass('btn-danger')
+                  .removeClass('btn-success').addClass('btn-danger');
+              });
           });
       });
 
