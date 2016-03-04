@@ -4,11 +4,9 @@
 [![NPM](https://nodei.co/npm/phpipam-js.png?downloads=false)](https://nodei.co/npm/phpipam-js/)
 -->
 
-This is a javascript client utilizing the [REST API][0] of {php}IPAM.
-It's running via node or browser. The async part is based on
-[Bluebird][4] Promises. For demonstration, there is a synchronous
-interface based on [synchronize.js][3] and [Node fibers(1)][2], too.
-HTTP work by [request][5].
+This is a javascript client utilizing the [REST API][0] of {php}IPAM. It's running via node or browser.  
+The async part is based on [Bluebird][4] Promises. For demonstration, there is a synchronous
+interface based on [synchronize.js][3] and [Node fibers(1)][2], too. HTTP work by [request][5].
 
 ## Usage
 
@@ -45,14 +43,13 @@ Consult the API and User management interface of {php}IPAM.
 
 #### .login()
 
-Login to API, using credentials applied to constructor (see above).
-Returns a promise for the login request. But you can use it in a synchronous
-style. Subsequent queries _waiting_ for successfull login (see examples, below).
+Login to API, using credentials applied to constructor (see above). Returns a promise for the login request.  
+But you can use it in a synchronous style. Subsequent queries _waiting_ for successful login (see examples, below).
 
 #### .logout()
 
-Logout from API. Returns a promise for the logout request. But you can use
-it in a synchronous style. Its _waiting_ for outstanding queries (see examples, below).
+Logout from API. Returns a promise for the logout request.  
+But you can use it in a synchronous style. Its _waiting_ for outstanding queries (see examples, below).
 
 #### .request(controllerPath, [configObject])
 
@@ -114,13 +111,13 @@ Hence one drawback is, that the real `OPTIONS` API calls are hidden to the clien
 
 ## The synchronous Interface
 
-For ECMA/Javascript beginners it's sometimes hard to keep the async nonblocking nature
+For ECMA/Javascript beginners it's sometimes hard to keep the async non-blocking nature
 of this platform in mind. It seems to be a pain to fizzle out with callback based or event
 driven models, just for Sysadmins. The most stuff they know is synchronous and blocking.
 
 One solution to come up against that hazard is called [Node fibers(1)][2]. With a wrapper
 like [synchronize.js][3] you can synchronizify almost any async function and run it
-synchronously inside a fiber (see examples, below). Feels like Perl, Python, Shell...
+synchronously inside a fiber. Feels like Perl, Python, Shell...  (see examples, below)
 
 Because fibers are a node plugin, they are not available in browsers.
 
@@ -132,7 +129,7 @@ Calls `callback` with resulting JSON blob.
 ###### Arguments
 
 * `callback(error, dump)` - A _nodeback_ callback. Resulting JSON blob applied to `dump`.
-* `configObject` - Configuration object. Defaults to `{ fetchAddresses: false, fetchUsage: false }`.
+* `configObject` - Configuration object. Defaults to `{ fetchAddresses: false, fetchUsage: false }`.  
    Set to `true` to fetch addresses and/or usage of each network, too.
 
 #### Note on RHEL/CentOS 6
