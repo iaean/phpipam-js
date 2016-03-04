@@ -5,7 +5,7 @@
 -->
 
 This is a javascript client utilizing the [REST API][0] of {php}IPAM.
-It's running via node or in the browser. The async part is based on
+It's running via node or browser. The async part is based on
 [Bluebird][4] Promises. For demonstration, there is a synchronous
 interface based on [synchronize.js][3] and [Node fibers(1)][2], too.
 HTTP work by [request][5].
@@ -24,7 +24,6 @@ api.login();
 api.request('/user/').then(function(r) { console.log(r.data); });
 api.logout();
 ```
-
 ```html
 <html><head/><body>
   <script src="/phpipam.min.js"></script>
@@ -39,25 +38,21 @@ api.logout();
   </script>
 </body></html>
 ```
+You must provide a valid API key and a suitable account.
+Consult the API and User management interface of {php}IPAM.
 
-You must provide a configured API key and a suitable account.
-You do this via the API and User management interface of {php}IPAM.
-
-App id | App code | App permissions | App security | Comment
------- | -------- | --------------- | ------------ | -------
-apiKeyAppId | Not used | Read | SSL | NodeJS Client
 
 #### .login()
 #### .request(controllerPath, [configObject])
 #### .logout()
-
 #### .fetchNet(cidr)
 #### .fetchNets()
 #### .fetchVlans()
 
+
 ### Note on [CORS][7] for browsers
 
-{php}IPAM isn't [CORS enabled][8] by default. This blocks the usage for browsers.
+{php}IPAM isn't [CORS enabled][8] by default. This blocks browsers.
 Put the following on top of your `api/.htaccess` to enable CORS:
 ```apache
 SetEnvIf Origin (.*) AccessControlAllowOrigin=$1
@@ -70,19 +65,20 @@ Header always set Access-Control-Allow-Credentials true
 # Header always set Access-Control-Max-Age 86400
 ```
 
-After that, the browser will fire a so-called **preflight** to each API URI before accessing it.
+Browsers will fire a so-called *preflight* to each API URI before accessing it.
 This is done by touching the URI via `OPTIONS`. The touch __MUST__ return success.
 Unfortunately this is actually not true for all {php}IPAM API controllers.
-To workaround this put the following lines to your `api/.htaccess`:
+Some of them throwing with HTTP != 2xx. To workaround this, put the following lines
+to your `api/.htaccess`:
 ```apache
 RewriteEngine On
 # CORS preflight workaround
 RewriteCond %{REQUEST_METHOD} OPTIONS
 RewriteRule ^(.*)$ README [L]
 ```
-This will map all `OPTIONS` preflights to the api `README` file.
-Hence the server returns success for all preflights.
-The drawback is, that the real `OPTIONS` API calls are hidden to the client now.
+This will map all `OPTIONS` preflights to the `api/README` file.
+The server returns success for all preflights now.
+Hence one drawback is, that the real `OPTIONS` API calls are hidden to the client now.
 
 ### The synchronous Interface
 
@@ -114,8 +110,9 @@ installing [Node fibers(1)][2] on those systems...
 * dumpSync.js - dumps a JSON blob of all networks and VLANs
 * dumpSync1.js - prints the network tree based on a dump
 * index.html   
-  Use [Browsersync][6], run `browser-sync start --server --host A.B.C.D --index examples/index.html`
-  and point your browser to `A.B.C.D:3000` or `A.B.C.D:3001` to play with a small widget example for the brwoser.
+  Use [Browsersync][6], run
+  `browser-sync start --server --host A.B.C.D --index examples/index.html`
+  and point your browser to `A.B.C.D:3000` or `A.B.C.D:3001` to play with a small widget example.
 
 ## Contributing
 
