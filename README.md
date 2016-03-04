@@ -13,6 +13,7 @@ HTTP work by [request][5].
 ## Usage
 
 Install [globally] via `npm`: `npm install [-g] phpipam-js`
+:exclamation: Note: It's not published, yet.
 
 ```javascript
 var IPapi = require('phpipam-js');
@@ -52,7 +53,7 @@ Consult the API and User management interface of {php}IPAM.
 
 ## Note on [CORS][7] for browsers
 
-{php}IPAM isn't [CORS enabled][8] by default. This blocks browsers.
+{php}IPAM API isn't [CORS enabled][8] by default. This blocks browsers.
 Put the following on top of your `api/.htaccess` to enable CORS:
 ```apache
 SetEnvIf Origin (.*) AccessControlAllowOrigin=$1
