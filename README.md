@@ -108,7 +108,7 @@ installing [Node fibers(1)][2] on those systems...
 
 ## Examples
 
-* [async.js](examples/dumpSync.js) - call some functions
+* [async.js](examples/async.js) - call some functions
 * [dumpSync.js](examples/dumpSync.js) - dumps a JSON blob of all networks and VLANs
 * [dumpSync1.js](examples/dumpSync1.js) - prints the network tree based on a dump
 * [index.html](examples/index.html)   
