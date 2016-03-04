@@ -59,7 +59,7 @@ Makes an API call. Returns resulting JSON blob in a promise for the request.
 ###### Arguments
 
 * `controllerPath` - Target API controller URI. Its append to `baseURI`
-* `configObject` - Configuration object directly fed to [request()][5]. Defaults to `{ method: 'GET' }`.
+* `configObject` - Configuration object fed directly to [request()][5]. Defaults to `{ method: 'GET' }`.
 
 #### .fetchNet(cidr)
 
@@ -114,7 +114,7 @@ Hence one drawback is, that the real `OPTIONS` API calls are hidden to the clien
 
 For ECMA/Javascript beginners it's sometimes hard to keep the async non-blocking nature
 of this platform in mind. It seems to be a pain to fizzle out with callback based or event
-driven models, just for Sysadmins. The most stuff they know is synchronous and blocking.
+driven models, just for Sysadmins. Workaday life is synchronous and blocking here.
 
 One solution to come up against that hazard is called [Node fibers(1)][2]. With a wrapper
 like [synchronize.js][3] you can synchronizify almost any async function and run it
