@@ -5,8 +5,9 @@
 -->
 
 This is a javascript client utilizing the [REST API][0] of {php}IPAM. It's running via node or browser.  
-The async part is based on [Bluebird][4] Promises. For demonstration, there is a synchronous
-interface based on [synchronize.js][3] and [Node fibers(1)][2], too. HTTP work by [request][5].
+The async part is based on [Bluebird][4] Promises.  
+For demonstration, there is a synchronous interface based on [synchronize.js][3] and [Node fibers(1)][2], too.  
+HTTP work by [request][5].
 
 ## Usage
 
@@ -38,7 +39,7 @@ api.logout();
   </script>
 </body></html>
 ```
-You must provide a valid API key and a suitable account.
+You must provide a valid API key and a suitable account.  
 Consult the API and User management interface of {php}IPAM.
 
 #### .login()
@@ -53,7 +54,7 @@ But you can use it in a synchronous style. Its _waiting_ for outstanding queries
 
 #### .request(controllerPath, [configObject])
 
-Makes an API call. Returns a promise for the request.
+Makes an API call. Returns resulting JSON blob in a promise for the request.
 
 ###### Arguments
 
@@ -62,8 +63,8 @@ Makes an API call. Returns a promise for the request.
 
 #### .fetchNet(cidr)
 
-Queries for a network. If found, queries for associated VLAN, child networks
-and parent network, too. Returns resulting JSON blob in a promise.
+Queries for a network. If found, queries for associated VLAN, child networks and parent network, too.  
+Returns resulting JSON blob in a promise.
 
 ###### Arguments
 
@@ -81,7 +82,7 @@ Returns resulting JSON blob in a promise.
 
 ## Note on [CORS][7] for browsers
 
-{php}IPAM API isn't [CORS enabled][8] by default. This blocks browsers.
+{php}IPAM API isn't [CORS enabled][8] by default. This blocks browsers.  
 Put the following on top of your `api/.htaccess` to enable CORS:
 ```apache
 SetEnvIf Origin (.*) AccessControlAllowOrigin=$1
@@ -117,7 +118,8 @@ driven models, just for Sysadmins. The most stuff they know is synchronous and b
 
 One solution to come up against that hazard is called [Node fibers(1)][2]. With a wrapper
 like [synchronize.js][3] you can synchronizify almost any async function and run it
-synchronously inside a fiber. Feels like Perl, Python, Shell...  (see examples, below)
+synchronously inside a fiber. Feels like Perl, Python, Shell.  
+See the examples, below.
 
 Because fibers are a node plugin, they are not available in browsers.
 
