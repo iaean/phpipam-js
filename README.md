@@ -50,7 +50,7 @@ Consult the API and User management interface of {php}IPAM.
 #### .fetchVlans()
 
 
-### Note on [CORS][7] for browsers
+## Note on [CORS][7] for browsers
 
 {php}IPAM isn't [CORS enabled][8] by default. This blocks browsers.
 Put the following on top of your `api/.htaccess` to enable CORS:
@@ -80,7 +80,7 @@ This will map all `OPTIONS` preflights to the `api/README` file.
 The server returns success for all preflights now.
 Hence one drawback is, that the real `OPTIONS` API calls are hidden to the client now.
 
-### The synchronous Interface
+## The synchronous Interface
 
 
 
