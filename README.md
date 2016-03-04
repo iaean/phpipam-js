@@ -108,10 +108,10 @@ installing [Node fibers(1)][2] on those systems...
 
 ## Examples
 
-* async.js - call some functions
-* dumpSync.js - dumps a JSON blob of all networks and VLANs
-* dumpSync1.js - prints the network tree based on a dump
-* index.html   
+* [async.js](examples/dumpSync.js) - call some functions
+* [dumpSync.js](examples/dumpSync.js) - dumps a JSON blob of all networks and VLANs
+* [dumpSync1.js](examples/dumpSync1.js) - prints the network tree based on a dump
+* [index.html](examples/index.html)   
   Use [Browsersync][6], run
   `browser-sync start --server --host A.B.C.D --index examples/index.html`
   and point your browser to `A.B.C.D:3000` or `A.B.C.D:3001` to play with a small widget example.
