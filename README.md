@@ -43,14 +43,44 @@ api.logout();
 You must provide a valid API key and a suitable account.
 Consult the API and User management interface of {php}IPAM.
 
-
 #### .login()
-#### .request(controllerPath, [configObject])
+
+Login to API, using credentials applied to constructor (see above).
+Returns a promise for the login request. But you can use it in a synchronous
+style. Subsequent queries _waiting_ for successfull login (see examples, below).
+
 #### .logout()
+
+Logout from API. Returns a promise for the logout request. But you can use
+it in a synchronous style. Its _waiting_ for outstanding queries (see examples, below).
+
+#### .request(controllerPath, [configObject])
+
+Makes an API call. Returns a promise for the request.
+
+###### Arguments
+
+* `controllerPath` - Target API controller URI. Its append to `baseURI`
+* `configObject` - Configuration object directly fed to [request()][5]. Defaults to `{ method: 'GET' }`.
+
 #### .fetchNet(cidr)
+
+Queries for a network. If found, queries for associated VLAN, child networks
+and parent network, too. Returns resulting JSON blob in a promise.
+
+###### Arguments
+
+* `cidr` - A network in CIDR notation e.g. `10.0.1.0/24`.
+
 #### .fetchNets()
+
+Queries for all networks in all sections.
+Returns resulting JSON blob in a promise.
+
 #### .fetchVlans()
 
+Queries for all VLANs in all L2 domains.
+Returns resulting JSON blob in a promise.
 
 ## Note on [CORS][7] for browsers
 
@@ -84,14 +114,26 @@ Hence one drawback is, that the real `OPTIONS` API calls are hidden to the clien
 
 ## The synchronous Interface
 
+For ECMA/Javascript beginners it's sometimes hard to keep the async nonblocking nature
+of this platform in mind. It seems to be a pain to fizzle out with callback based or event
+driven models, just for Sysadmins. The most stuff they know is synchronous and blocking.
 
+One solution to come up against that hazard is called [Node fibers(1)][2]. With a wrapper
+like [synchronize.js][3] you can synchronizify almost any async function and run it
+synchronously inside a fiber (see examples, below). Feels like Perl, Python, Shell...
+
+Because fibers are a node plugin, they are not available in browsers.
 
 #### .dumpSync(callback, [configObject])
 
-<!---
- callback: `function(e, dump)`
- configObject: `{ fetchAddresses: false, fetchUsage: true }`
--->
+Dumps all networks from all sections and all VLANs from all L2 domains.
+Calls `callback` with resulting JSON blob.
+
+###### Arguments
+
+* `callback(error, dump)` - A _nodeback_ callback. Resulting JSON blob applied to `dump`.
+* `configObject` - Configuration object. Defaults to `{ fetchAddresses: false, fetchUsage: false }`.
+   Set to `true` to fetch addresses and/or usage of each network, too.
 
 #### Note on RHEL/CentOS 6
 
