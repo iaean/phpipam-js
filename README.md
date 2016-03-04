@@ -13,6 +13,7 @@ HTTP work by [request][5].
 ## Usage
 
 Install [globally] via `npm`: `npm install [-g] phpipam-js`
+
 :exclamation: Note: It's not published, yet.
 
 ```javascript
