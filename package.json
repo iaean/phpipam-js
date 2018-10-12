@@ -31,7 +31,7 @@
   "scripts": {},
   "dependencies": {
     "underscore": "~1.8.3",
-    "deep-extend": "~0.4.1",
+    "deep-extend": "~>0.5.1",
     "bluebird": "~3.3.1",
     "request": "~2.69.0",
     "xhr": "~2.2.0",
